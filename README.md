@@ -12,3 +12,7 @@ deactivate
 
 ## 버전 저장 방법
 pip freeze > requirements.txt
+
+
+# 실행 방법
+streamlit run app.py

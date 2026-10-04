@@ -1,88 +1,80 @@
 import streamlit as st
+from langdetect import detect
 from transformers import pipeline
 
 
-# ========================================
-# 1. 페이지 설정
-# ========================================
-
-st.set_page_config(
-    page_title="뉴스 토픽 분류",
-    page_icon="📰",
-    layout="centered",
-)
-
-
-# ========================================
-# 2. 모델 로드
-# ========================================
-
-MODEL_PATH = "./model/news_topic_model"
+KOREAN_MODEL_PATH = "./model/korean/news_topic_model"
+ENGLISH_MODEL_PATH = "./model/english/news_topic_model"
 
 
 @st.cache_resource
-def load_model():
-    classifier = pipeline(
+def load_models():
+
+    korean_classifier = pipeline(
         "text-classification",
-        model=MODEL_PATH,
-        tokenizer=MODEL_PATH,
+        model=KOREAN_MODEL_PATH,
+        tokenizer=KOREAN_MODEL_PATH,
     )
 
-    return classifier
+    english_classifier = pipeline(
+        "text-classification",
+        model=ENGLISH_MODEL_PATH,
+        tokenizer=ENGLISH_MODEL_PATH,
+    )
+
+    return korean_classifier, english_classifier
 
 
-classifier = load_model()
+korean_classifier, english_classifier = load_models()
 
 
-# ========================================
-# 3. UI
-# ========================================
-
-st.title("📰 뉴스 토픽 분류 서비스")
-
-st.write(
-    "뉴스 제목을 입력하면 AI가 뉴스의 토픽을 분류합니다."
-)
-
-
-# ========================================
-# 4. 뉴스 제목 입력
-# ========================================
+st.title("📰 다국어 뉴스 토픽 분류 서비스")
 
 title = st.text_input(
-    "뉴스 제목",
-    placeholder="예: 삼성전자가 새로운 반도체 기술을 공개했다."
+    "뉴스 제목을 입력하세요."
 )
 
-
-# ========================================
-# 5. 분류 버튼
-# ========================================
 
 if st.button("토픽 분류하기"):
 
     if not title.strip():
 
-        st.warning(
-            "뉴스 제목을 입력해주세요."
-        )
+        st.warning("뉴스 제목을 입력해주세요.")
 
     else:
 
-        result = classifier(title)[0]
+        # 언어 감지
+        language = detect(title)
 
-        category = result["label"]
-        score = result["score"]
+        st.write(
+            f"감지된 언어: `{language}`"
+        )
 
 
-        # ========================================
-        # 6. 결과 출력
-        # ========================================
+        # 한국어
+        if language == "ko":
+
+            result = korean_classifier(title)[0]
+
+        # 영어
+        elif language == "en":
+
+            result = english_classifier(title)[0]
+
+        # 지원하지 않는 언어
+        else:
+
+            st.error(
+                "현재 한국어와 영어만 지원합니다."
+            )
+
+            st.stop()
+
 
         st.subheader("분류 결과")
 
-        st.success(category)
+        st.success(result["label"])
 
         st.write(
-            f"신뢰도: **{score:.2%}**"
+            f"신뢰도: {result['score']:.2%}"
         )
