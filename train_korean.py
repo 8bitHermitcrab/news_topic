@@ -25,8 +25,8 @@ NUM_EPOCHS = 5
 LEARNING_RATE = 2e-5
 WEIGHT_DECAY = 0.01
 
-TRAIN_DATA_PATH = "data/train_cleandata.csv"
-TEST_DATA_PATH = "data/test_cleandata.csv"
+TRAIN_DATA_PATH = "data/train_data.csv"
+TEST_DATA_PATH = "data/test_data.csv"
 
 MODEL_SAVE_PATH = "model/news_topic_model"
 
