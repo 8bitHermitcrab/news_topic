@@ -7,6 +7,17 @@ KOREAN_MODEL_PATH = "./model/korean/news_topic_model"
 ENGLISH_MODEL_PATH = "./model/english/news_topic_model"
 
 
+id2label = {
+    0: "IT과학",
+    1: "경제",
+    2: "사회",
+    3: "생활문화",
+    4: "세계",
+    5: "스포츠",
+    6: "정치",
+}
+
+
 @st.cache_resource
 def load_models():
 
@@ -50,7 +61,6 @@ if st.button("토픽 분류하기"):
             f"감지된 언어: `{language}`"
         )
 
-
         # 한국어
         if language == "ko":
 
@@ -70,10 +80,15 @@ if st.button("토픽 분류하기"):
 
             st.stop()
 
+        # LABEL_4 → 4
+        label_id = int(result["label"].split("_")[-1])
+
+        # 4 → 세계
+        label_name = id2label[label_id]
 
         st.subheader("분류 결과")
 
-        st.success(result["label"])
+        st.success(label_name)
 
         st.write(
             f"신뢰도: {result['score']:.2%}"
