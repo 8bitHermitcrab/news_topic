@@ -16,3 +16,6 @@ pip freeze > requirements.txt
 
 # 실행 방법
 streamlit run app.py
+
+# 뉴스 토픽 분류 서비스
+https://newstopic-8ht69orifvdkyrbe3ap4b5.streamlit.app/
