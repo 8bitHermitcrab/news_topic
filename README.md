@@ -18,4 +18,5 @@ pip freeze > requirements.txt
 streamlit run app.py
 
 # 뉴스 토픽 분류 서비스
-https://newstopic-8ht69orifvdkyrbe3ap4b5.streamlit.app/
+~~https://newstopic-8ht69orifvdkyrbe3ap4b5.streamlit.app/~~
+http://136.115.122.111:8501/
