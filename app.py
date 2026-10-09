@@ -80,11 +80,16 @@ if st.button("토픽 분류하기"):
 
             st.stop()
 
-        # LABEL_4 → 4
-        label_id = int(result["label"].split("_")[-1])
+        # 모델 출력 라벨 처리
+        predicted_label = result["label"]
 
-        # 4 → 세계
-        label_name = id2label[label_id]
+        if predicted_label.startswith("LABEL_"):
+            # 기존 모델: LABEL_4 → 4 → 세계
+            label_id = int(predicted_label.split("_")[-1])
+            label_name = id2label[label_id]
+        else:
+            # 새 한국어 모델: 생활문화 → 생활문화
+            label_name = predicted_label
 
         st.subheader("분류 결과")
 
