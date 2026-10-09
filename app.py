@@ -3,7 +3,7 @@ from langdetect import detect
 from transformers import pipeline
 
 
-KOREAN_MODEL_PATH = "./model/korean/news_topic_model"
+KOREAN_MODEL_PATH = "./model/korean/news_topic_model_klue"
 ENGLISH_MODEL_PATH = "./model/english/news_topic_model"
 
 
