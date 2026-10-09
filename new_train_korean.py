@@ -41,7 +41,7 @@ from transformers import (
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", default="klue/roberta-base", help="불러올 모델 이름")
 parser.add_argument("--eval-only", action="store_true", help="학습 없이 검증셋 평가만 실행")
-parser.add_argument("--epochs", type=int, default=3)
+parser.add_argument("--epochs", type=int, default=5)
 args = parser.parse_args()
 
 MODEL_CHECKPOINT = args.model
